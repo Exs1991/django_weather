@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Погодное Приложение</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-danger">
+<div class="bg-warning  d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
+    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+        <span class="bg-primary border rounded-3 fs-4">Oleg_2022</span>
+    </a>
+
+    <nav class="bg-primary border rounded-3 d-inline-flex mt-2 mt-md-0 ms-md-auto">
+        <a class="me-3 py-2 text-dark text-decoration-none" href="/">Главная страница</a>
+    </nav>
+</div>
+<div class="bg-primary">
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-4 offset-4">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <label for="city">Для того чтобы узнать погоду введите город:</label>
+                        {{ form.name }}
+                        <input type="submit" name="send" value="Узнать" class="mt-2 btn btn-danger">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h1>Информация о погоде</h1>
+                {% for info in all_info %}
+                <div class="col-6 offset-1 ">
+                    <div class="bg-danger border rounded-3">
+                        <div class="col-md-8 col-md-offset-6">
+                            <div class="bg-warning border rounded-3" >
+                                <b>Город: </b>{{info.city}}<br>
+                                <b>Температура: </b> {{info.temp}}<sup>0</sup><br>
+                                <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Фото погоды" class="img-thumbnail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-8">
+                <h1>Факты о погоде</h1>
+                {% for el in tasks %}
+                <div class="col-10 offset-1 ">
+                    <div class="alert alert-warning mt-2 ">
+                        <h2>{{el.title}}</h2>
+                        <p>{{el.task|safe|linebreaks|truncatewords:50}}</p>
+                        <a href="{% url 'about' %}" class="mt-2 btn btn-danger">Подробнее</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</div >
+
+</body>
+</html>
